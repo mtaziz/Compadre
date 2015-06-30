@@ -1,0 +1,8 @@
+cars:
+    http://www.autoevolution.com/cars/:
+        //div[@class="brandlist"]/div/a/@href:
+            modelname*: //div[@class="carslist-item"]/h2/a/@title
+            //div[@class="carslist-item"]/h2/a/@href:
+                //div[@class="seriesboxengines"]/ul/li[1]/a/@href:
+                    cylinders: //dt[text()="Cylinders"]/following-sibling::dd[1]/text()
+        brandname: //div[@class="brandlist"]/div/a/h2/text()

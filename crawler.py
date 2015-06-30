@@ -1,25 +1,12 @@
+import os
 import sys
-import json
+import simplejson
 import requests
 import time
 import yaml
 from collections import OrderedDict
 from collections import defaultdict
 from lxml import html
-
-
-
-document = """
-cars:
-    http://www.autoevolution.com/cars/:
-        //div[@class="brandlist"]/div/a/@href:
-            modelname*: //div[@class="carslist-item"]/h2/a/@title
-            //div[@class="carslist-item"]/h2/a/@href:
-                //div[@class="seriesboxengines"]/ul/li[1]/a/@href:
-                    cylinders: //dt[text()="Cylinders"]/following-sibling::dd[1]/text()
-        brandname: //div[@class="brandlist"]/div/a/h2/text()
-            """
-
 
 def request_safely(url, throttle=0.0):
     r = requests.get(url)
@@ -30,7 +17,7 @@ def request_safely(url, throttle=0.0):
     conditions = [len(r.text) < 10]
 
     while any(conditions):
-        print "request failed. trying again in %ss..." % sleeptime
+        print "a request failed. trying again in %ss..." % sleeptime
         time.sleep(sleeptime)
         sleeptime = min(60, sleeptime*2)
 
@@ -103,11 +90,25 @@ def crawl(d, url=None, desc={}, results=[]):
 
     return results
 
+if __name__ == "__main__":
+    
+    if len(sys.argv) < 0:
+        print "specify a yaml file to read crawl instructions from"
+    
+    elif os.path.exists(sys.argv[0]):
 
-yaml_doc = yaml.load(document2)
-model_name, crawl_data = yaml_doc.iteritems().next()
+        file_ = open(sys.argv[0], 'r')
+        yaml_ = yaml.load(file_.read())
+        file_.close()
 
-doc = sort_od(OrderedDict(crawl_data))
+        model_name, crawl_data = yaml_doc.iteritems().next()
+        result = crawl(doc)
 
-result = crawl(doc)
-print result
+        json_ = open("crawl_%s.json"%model_name, 'w')
+        json_.write(simplejson.dumps(result, indent=4, sort_keys=True))
+        json_.close()
+        print "crawl result saved to crawl_%s.json" % model_name
+
+    else:
+
+        print "there was a problem. please fix your argument and try again"
