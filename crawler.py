@@ -40,11 +40,14 @@ def sort_od(od):
     return res
 
 
-def crawl(d, url=None, desc={}, results=[]):
+def crawl(d, url=None, desc={}, results=[], options=[]):
 
     if url:
-        r = request_safely(url, 200)
+        r = request_safely(url, 100)
         curr_page = html.fromstring(r.text)
+
+        if "-v" in options:
+            print "\nscraping: %s" % url
 
     temp_data = {}
 
@@ -55,7 +58,7 @@ def crawl(d, url=None, desc={}, results=[]):
 
             if any(flag in k for flag in ['www.', 'http://']):
                 "This is a normal url, continue the crawl"
-                results.extend(crawl(v, k, desc))
+                results.extend(crawl(v, k, desc=desc, options=options))
 
             else:
                 """This is an xpath expression for a url. if the next entry in the instruction set is a url
@@ -68,7 +71,7 @@ def crawl(d, url=None, desc={}, results=[]):
 
                     """carry newly scraped fields to the next crawl
                     """
-                    results.extend(crawl(v, url, new_desc))
+                    results.extend(crawl(v, url, desc=new_desc, options=options))
 
         else:
             "not a url, must be a field"
@@ -84,6 +87,9 @@ def crawl(d, url=None, desc={}, results=[]):
                 new_desc = {ke:ve[index] for ke,ve in temp_data.iteritems()}
                 new_desc.update(desc)
 
+                if "-v" in options:
+                    print "scraped data: %s" % new_desc
+
                 result_data.append(new_desc)
 
             return result_data
@@ -91,23 +97,25 @@ def crawl(d, url=None, desc={}, results=[]):
     return results
 
 if __name__ == "__main__":
-    
-    if len(sys.argv) < 0:
+
+    if len(sys.argv) < 2:
         print "specify a yaml file to read crawl instructions from"
     
-    elif os.path.exists(sys.argv[0]):
+    elif os.path.exists(sys.argv[1]):
 
-        file_ = open(sys.argv[0], 'r')
+        file_ = open(sys.argv[1], 'r')
         yaml_ = yaml.load(file_.read())
         file_.close()
 
-        model_name, crawl_data = yaml_doc.iteritems().next()
-        result = crawl(doc)
+        print "crawl started... \nrun with -v for verbose crawling"
+
+        model_name, crawl_data = yaml_.iteritems().next()
+        result = crawl(sort_od(crawl_data), options=sys.argv[2:])
 
         json_ = open("crawl_%s.json"%model_name, 'w')
         json_.write(simplejson.dumps(result, indent=4, sort_keys=True))
         json_.close()
-        print "crawl result saved to crawl_%s.json" % model_name
+        print "crawl result saved to %s.json" % model_name
 
     else:
 
