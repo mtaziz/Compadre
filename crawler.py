@@ -7,6 +7,7 @@ import yaml
 from collections import OrderedDict
 from collections import defaultdict
 from lxml import html
+from urlparse import urljoin
 
 def request_safely(url, throttle=0.0, timeout_=5.0, timeout_read=5.0, sleeptime=2.0):
     r = None
@@ -49,7 +50,7 @@ def sort_od(od):
             res[k] = v
     return res
 
-def crawl(d, url=None, desc={}, results=[], options=[]):
+def crawl(d, url=None, base="", desc={}, results=[], options=[]):
 
     if url:
         r = request_safely(url, 500)
@@ -67,7 +68,7 @@ def crawl(d, url=None, desc={}, results=[], options=[]):
 
             if any(flag in k for flag in ['www.', 'http://']):
                 "This is a normal url, continue the crawl"
-                results.extend(crawl(v, k, desc=desc, options=options))
+                results.extend(crawl(v, k, base=urljoin(base, url), desc=desc, options=options))
 
             else:
                 """This is an xpath expression for a url. if the next entry in the instruction set is a url
@@ -78,9 +79,12 @@ def crawl(d, url=None, desc={}, results=[], options=[]):
                     new_desc = {ke:ve[index] for ke,ve in temp_data.iteritems()}
                     new_desc.update(desc)
 
+                    "if relative url, need to prepend base url"
+                    url = urljoin(base, url)
+
                     """carry newly scraped data to the next crawl
                     """
-                    results.extend(crawl(v, url, desc=new_desc, options=options))
+                    results.extend(crawl(v, url, base=urljoin(base, url), desc=new_desc, options=options))
 
         else:
             "not a url, must be a field"
