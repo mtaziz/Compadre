@@ -142,8 +142,8 @@ if __name__ == "__main__":
                 final_result.append(r)
             
 
-        json_ = open("crawl_%s.json"%model_name, 'w')
-        json_.write(simplejson.dumps(result, indent=4, sort_keys=True))
+        json_ = open("%s.json"%model_name, 'w')
+        json_.write(simplejson.dumps(final_result, indent=4, sort_keys=True))
         json_.close()
         print "crawl result saved to %s.json" % model_name
 
