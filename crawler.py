@@ -8,20 +8,30 @@ from collections import OrderedDict
 from collections import defaultdict
 from lxml import html
 
-def request_safely(url, throttle=0.0):
-    r = requests.get(url)
-    
-    time.sleep(throttle/1000.0)
+def request_safely(url, throttle=0.0, timeout_=5.0, timeout_read=5.0, sleeptime=2.0):
+    r = None
+    timeout = False
 
-    sleeptime = 2
-    conditions = [len(r.text) < 10]
+    try:
+        "sleep, the send request"
+        time.sleep(throttle/1000.0)
+        r = requests.get(url=url,
+                         timeout=(timeout_, timeout_read))
+        return r
+    except requests.exceptions.ConnectTimeout as e:
+        timeout = True
 
-    while any(conditions):
-        print "a request failed. trying again in %ss..." % sleeptime
+
+    errors = (lambda req: any([len(req.text) < 10,
+                            req.status_code in [400, 403, 404, 405, 429, 500],
+                            timeout]))
+
+    while errors(r):
+        print "request failed: %s. trying again in %ss..." % (r.status_code, sleeptime)
         time.sleep(sleeptime)
         sleeptime = min(60, sleeptime*2)
 
-        r = requests.get(url)
+        "try request again"
 
     return r
 
@@ -39,11 +49,10 @@ def sort_od(od):
             res[k] = v
     return res
 
-
 def crawl(d, url=None, desc={}, results=[], options=[]):
 
     if url:
-        r = request_safely(url, 100)
+        r = request_safely(url, 500)
         curr_page = html.fromstring(r.text)
 
         if "-v" in options:
@@ -69,7 +78,7 @@ def crawl(d, url=None, desc={}, results=[], options=[]):
                     new_desc = {ke:ve[index] for ke,ve in temp_data.iteritems()}
                     new_desc.update(desc)
 
-                    """carry newly scraped fields to the next crawl
+                    """carry newly scraped data to the next crawl
                     """
                     results.extend(crawl(v, url, desc=new_desc, options=options))
 
@@ -107,10 +116,31 @@ if __name__ == "__main__":
         yaml_ = yaml.load(file_.read())
         file_.close()
 
-        print "crawl started... \nrun with -v for verbose crawling"
+        print "crawl started...\nrun with -v for verbose crawling"
 
         model_name, crawl_data = yaml_.iteritems().next()
         result = crawl(sort_od(crawl_data), options=sys.argv[2:])
+
+        final_result = []
+
+        "combine duplicates"
+        unique_field = [k for k in result[0].keys() if "*" in k][0]
+
+        for r in result:
+
+            dupe = [final_result.index(f) for f in final_result if r[unique_field] == f[unique_field]]
+
+            if dupe:
+                dupe = dupe[0]
+                for k,v in r.iteritems():
+                    if not v == final_result[dupe][k]:
+                        if isinstance(final_result[dupe][k], list):
+                            final_result[dupe][k].append(v)
+                        else:
+                            final_result[dupe][k] = [final_result[dupe][k], v]
+            else:
+                final_result.append(r)
+            
 
         json_ = open("crawl_%s.json"%model_name, 'w')
         json_.write(simplejson.dumps(result, indent=4, sort_keys=True))
