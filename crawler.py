@@ -2,9 +2,10 @@
 """Smart web scraper. Use this to define scraping instructions to automatically populate data models."""
 import os
 import sys
-import simplejson
-import requests
+import re
 import time
+import requests
+import simplejson
 import yaml
 from collections import OrderedDict
 from collections import defaultdict
@@ -70,7 +71,16 @@ def crawl(d, url=None, base="", desc={}, results=[], options=[]):
 
             if any(flag in k for flag in ['www.', 'http://']):
                 "This is a normal url, continue the crawl"
-                results.extend(crawl(v, k, base=urljoin(base, url), desc=desc, options=options))
+
+                "check for url number loop instructions"
+                num_loop = re.search(r'\[([0-9\(\)]+)->([0-9\(\)]+)\]', k)
+                if num_loop:
+                    for i in range(int(num_loop.group(1)), int(num_loop.group(2))+1):
+                        "replace loop with actual number, build new url and crawl"
+                        new_url = re.sub(r'(\[[0-9\(\)]+->[0-9\(\)]+\])', "%s"%i, k)
+                        results.extend(crawl(v, new_url, base=urljoin(base, new_url), desc=desc, options=options))
+                else:
+                    results.extend(crawl(v, k, base=urljoin(base, url), desc=desc, options=options))
 
             else:
                 """This is an xpath expression for a url. if the next entry in the instruction set is a url
@@ -154,4 +164,4 @@ if __name__ == "__main__":
         print "crawl result saved to %s.json" % model_name
 
     else:
-        print "there was a problem. please fix your arguments and try again"
+        print "crawl instruction set not found. please fix your arguments and try again"
