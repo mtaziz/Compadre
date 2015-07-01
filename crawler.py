@@ -92,7 +92,7 @@ def crawl(d, url=None, base="", desc={}, results=[], options=[]):
             "not a url, must be a field"
             temp_data[k] = curr_page.xpath(v)
 
-    "check if we've reached the end"
+    "check if we've reached the end of the tree"
     if not any(isinstance(v, dict) for k,v in d.iteritems()):
         tk,tv = temp_data.iteritems().next()
 
