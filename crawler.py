@@ -16,19 +16,19 @@ def request_safely(url, throttle=0.0, timeout_=5.0, timeout_read=5.0, sleeptime=
     r = None
     timeout = False
 
+    errors = (lambda req: any([len(req.text) < 10,
+                            req.status_code in [400, 403, 404, 405, 429, 500],
+                            timeout]))
+
     try:
         "sleep, the send request"
         time.sleep(throttle/1000.0)
         r = requests.get(url=url,
                          timeout=(timeout_, timeout_read))
-        return r
+        if not errors(r):
+            return r
     except requests.exceptions.ConnectTimeout as e:
         timeout = True
-
-
-    errors = (lambda req: any([len(req.text) < 10,
-                            req.status_code in [400, 403, 404, 405, 429, 500],
-                            timeout]))
 
     while errors(r):
         print "request failed: %s. trying again in %ss..." % (r.status_code, sleeptime)
@@ -56,7 +56,7 @@ def sort_od(od):
 def crawl(d, url=None, base="", desc={}, results=[], options=[]):
 
     if url:
-        r = request_safely(url, 500)
+        r = request_safely(url, 200)
         curr_page = html.fromstring(r.text)
 
         if "-v" in options:
