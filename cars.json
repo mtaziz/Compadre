@@ -1,0 +1,402 @@
+[
+    {
+        "brandname*": "ACURA",
+        "brandurl": "http://www.autoevolution.com/acura/"
+    },
+    {
+        "brandname*": "ALFA ROMEO",
+        "brandurl": "http://www.autoevolution.com/alfa-romeo/"
+    },
+    {
+        "brandname*": "ARIEL",
+        "brandurl": "http://www.autoevolution.com/ariel/"
+    },
+    {
+        "brandname*": "ARO",
+        "brandurl": "http://www.autoevolution.com/aro/"
+    },
+    {
+        "brandname*": "ASTON MARTIN",
+        "brandurl": "http://www.autoevolution.com/aston-martin/"
+    },
+    {
+        "brandname*": "AUDI",
+        "brandurl": "http://www.autoevolution.com/audi/"
+    },
+    {
+        "brandname*": "BENTLEY",
+        "brandurl": "http://www.autoevolution.com/bentley/"
+    },
+    {
+        "brandname*": "BMW",
+        "brandurl": "http://www.autoevolution.com/bmw/"
+    },
+    {
+        "brandname*": "BRISTOL",
+        "brandurl": "http://www.autoevolution.com/bristol/"
+    },
+    {
+        "brandname*": "BUFORI",
+        "brandurl": "http://www.autoevolution.com/bufori/"
+    },
+    {
+        "brandname*": "BUGATTI",
+        "brandurl": "http://www.autoevolution.com/bugatti/"
+    },
+    {
+        "brandname*": "BUICK",
+        "brandurl": "http://www.autoevolution.com/buick/"
+    },
+    {
+        "brandname*": "CADILLAC",
+        "brandurl": "http://www.autoevolution.com/cadillac/"
+    },
+    {
+        "brandname*": "CATERHAM",
+        "brandurl": "http://www.autoevolution.com/caterham/"
+    },
+    {
+        "brandname*": "CHEVROLET",
+        "brandurl": "http://www.autoevolution.com/chevrolet/"
+    },
+    {
+        "brandname*": "CHRYSLER",
+        "brandurl": "http://www.autoevolution.com/chrysler/"
+    },
+    {
+        "brandname*": "CITROEN",
+        "brandurl": "http://www.autoevolution.com/citroen/"
+    },
+    {
+        "brandname*": "DACIA",
+        "brandurl": "http://www.autoevolution.com/dacia/"
+    },
+    {
+        "brandname*": "DAEWOO",
+        "brandurl": "http://www.autoevolution.com/daewoo/"
+    },
+    {
+        "brandname*": "DAIHATSU",
+        "brandurl": "http://www.autoevolution.com/daihatsu/"
+    },
+    {
+        "brandname*": "DATSUN",
+        "brandurl": "http://www.autoevolution.com/datsun/"
+    },
+    {
+        "brandname*": "DMC",
+        "brandurl": "http://www.autoevolution.com/dmc/"
+    },
+    {
+        "brandname*": "DODGE",
+        "brandurl": "http://www.autoevolution.com/dodge/"
+    },
+    {
+        "brandname*": "DONKERVOORT",
+        "brandurl": "http://www.autoevolution.com/donkervoort/"
+    },
+    {
+        "brandname*": "DR MOTOR",
+        "brandurl": "http://www.autoevolution.com/dr-motor/"
+    },
+    {
+        "brandname*": "FERRARI",
+        "brandurl": "http://www.autoevolution.com/ferrari/"
+    },
+    {
+        "brandname*": "FIAT",
+        "brandurl": "http://www.autoevolution.com/fiat/"
+    },
+    {
+        "brandname*": "FISKER",
+        "brandurl": "http://www.autoevolution.com/fisker/"
+    },
+    {
+        "brandname*": "FORD",
+        "brandurl": "http://www.autoevolution.com/ford/"
+    },
+    {
+        "brandname*": "FSO",
+        "brandurl": "http://www.autoevolution.com/fso/"
+    },
+    {
+        "brandname*": "GEELY",
+        "brandurl": "http://www.autoevolution.com/geely/"
+    },
+    {
+        "brandname*": "GMC",
+        "brandurl": "http://www.autoevolution.com/gmc/"
+    },
+    {
+        "brandname*": "GTA Motor",
+        "brandurl": "http://www.autoevolution.com/gta-motor/"
+    },
+    {
+        "brandname*": "HINDUSTAN",
+        "brandurl": "http://www.autoevolution.com/hindustan/"
+    },
+    {
+        "brandname*": "HOLDEN",
+        "brandurl": "http://www.autoevolution.com/holden/"
+    },
+    {
+        "brandname*": "HONDA",
+        "brandurl": "http://www.autoevolution.com/honda/"
+    },
+    {
+        "brandname*": "HUMMER",
+        "brandurl": "http://www.autoevolution.com/hummer/"
+    },
+    {
+        "brandname*": "HYUNDAI",
+        "brandurl": "http://www.autoevolution.com/hyundai/"
+    },
+    {
+        "brandname*": "INFINITI",
+        "brandurl": "http://www.autoevolution.com/infiniti/"
+    },
+    {
+        "brandname*": "ISUZU",
+        "brandurl": "http://www.autoevolution.com/isuzu/"
+    },
+    {
+        "brandname*": "JAGUAR",
+        "brandurl": "http://www.autoevolution.com/jaguar/"
+    },
+    {
+        "brandname*": "JEEP",
+        "brandurl": "http://www.autoevolution.com/jeep/"
+    },
+    {
+        "brandname*": "KIA",
+        "brandurl": "http://www.autoevolution.com/kia/"
+    },
+    {
+        "brandname*": "KOENIGSEGG",
+        "brandurl": "http://www.autoevolution.com/koenigsegg/"
+    },
+    {
+        "brandname*": "KTM",
+        "brandurl": "http://www.autoevolution.com/ktm/"
+    },
+    {
+        "brandname*": "LADA",
+        "brandurl": "http://www.autoevolution.com/lada/"
+    },
+    {
+        "brandname*": "LAMBORGHINI",
+        "brandurl": "http://www.autoevolution.com/lamborghini/"
+    },
+    {
+        "brandname*": "LANCIA",
+        "brandurl": "http://www.autoevolution.com/lancia/"
+    },
+    {
+        "brandname*": "LAND ROVER",
+        "brandurl": "http://www.autoevolution.com/land-rover/"
+    },
+    {
+        "brandname*": "LEXUS",
+        "brandurl": "http://www.autoevolution.com/lexus/"
+    },
+    {
+        "brandname*": "LINCOLN",
+        "brandurl": "http://www.autoevolution.com/lincoln/"
+    },
+    {
+        "brandname*": "LOTUS",
+        "brandurl": "http://www.autoevolution.com/lotus/"
+    },
+    {
+        "brandname*": "Mahindra",
+        "brandurl": "http://www.autoevolution.com/mahindra/"
+    },
+    {
+        "brandname*": "MARUSSIA",
+        "brandurl": "http://www.autoevolution.com/marussia-motors/"
+    },
+    {
+        "brandname*": "MARUTI SUZUKI",
+        "brandurl": "http://www.autoevolution.com/maruti-suzuki/"
+    },
+    {
+        "brandname*": "MASERATI",
+        "brandurl": "http://www.autoevolution.com/maserati/"
+    },
+    {
+        "brandname*": "MAYBACH",
+        "brandurl": "http://www.autoevolution.com/maybach/"
+    },
+    {
+        "brandname*": "MAZDA",
+        "brandurl": "http://www.autoevolution.com/mazda/"
+    },
+    {
+        "brandname*": "MCLAREN",
+        "brandurl": "http://www.autoevolution.com/mclaren/"
+    },
+    {
+        "brandname*": "MERCEDES BENZ",
+        "brandurl": "http://www.autoevolution.com/mercedes-benz/"
+    },
+    {
+        "brandname*": "MERCURY",
+        "brandurl": "http://www.autoevolution.com/mercury/"
+    },
+    {
+        "brandname*": "MG",
+        "brandurl": "http://www.autoevolution.com/mg/"
+    },
+    {
+        "brandname*": "MINI",
+        "brandurl": "http://www.autoevolution.com/mini/"
+    },
+    {
+        "brandname*": "MITSUBISHI",
+        "brandurl": "http://www.autoevolution.com/mitsubishi/"
+    },
+    {
+        "brandname*": "MORGAN",
+        "brandurl": "http://www.autoevolution.com/morgan/"
+    },
+    {
+        "brandname*": "NISSAN",
+        "brandurl": "http://www.autoevolution.com/nissan/"
+    },
+    {
+        "brandname*": "OLDSMOBILE",
+        "brandurl": "http://www.autoevolution.com/oldsmobile/"
+    },
+    {
+        "brandname*": "OPEL",
+        "brandurl": "http://www.autoevolution.com/opel/"
+    },
+    {
+        "brandname*": "PAGANI",
+        "brandurl": "http://www.autoevolution.com/pagani/"
+    },
+    {
+        "brandname*": "PANOZ",
+        "brandurl": "http://www.autoevolution.com/panoz/"
+    },
+    {
+        "brandname*": "PEUGEOT",
+        "brandurl": "http://www.autoevolution.com/peugeot/"
+    },
+    {
+        "brandname*": "PONTIAC",
+        "brandurl": "http://www.autoevolution.com/pontiac/"
+    },
+    {
+        "brandname*": "PORSCHE",
+        "brandurl": "http://www.autoevolution.com/porsche/"
+    },
+    {
+        "brandname*": "PROTON",
+        "brandurl": "http://www.autoevolution.com/proton/"
+    },
+    {
+        "brandname*": "QOROS",
+        "brandurl": "http://www.autoevolution.com/qoros/"
+    },
+    {
+        "brandname*": "RAM Trucks",
+        "brandurl": "http://www.autoevolution.com/ram-trucks/"
+    },
+    {
+        "brandname*": "RENAULT",
+        "brandurl": "http://www.autoevolution.com/renault/"
+    },
+    {
+        "brandname*": "ROLLS-ROYCE",
+        "brandurl": "http://www.autoevolution.com/rolls-royce/"
+    },
+    {
+        "brandname*": "SAAB",
+        "brandurl": "http://www.autoevolution.com/saab/"
+    },
+    {
+        "brandname*": "SALEEN",
+        "brandurl": "http://www.autoevolution.com/saleen/"
+    },
+    {
+        "brandname*": "SAMSUNG",
+        "brandurl": "http://www.autoevolution.com/samsung/"
+    },
+    {
+        "brandname*": "SANTANA",
+        "brandurl": "http://www.autoevolution.com/santana/"
+    },
+    {
+        "brandname*": "SATURN",
+        "brandurl": "http://www.autoevolution.com/saturn/"
+    },
+    {
+        "brandname*": "SCION",
+        "brandurl": "http://www.autoevolution.com/scion/"
+    },
+    {
+        "brandname*": "SEAT",
+        "brandurl": "http://www.autoevolution.com/seat/"
+    },
+    {
+        "brandname*": "SKODA",
+        "brandurl": "http://www.autoevolution.com/skoda/"
+    },
+    {
+        "brandname*": "SMART",
+        "brandurl": "http://www.autoevolution.com/smart/"
+    },
+    {
+        "brandname*": "SPYKER",
+        "brandurl": "http://www.autoevolution.com/spyker/"
+    },
+    {
+        "brandname*": "SSANGYONG",
+        "brandurl": "http://www.autoevolution.com/ssang-yong/"
+    },
+    {
+        "brandname*": "SUBARU",
+        "brandurl": "http://www.autoevolution.com/subaru/"
+    },
+    {
+        "brandname*": "SUZUKI",
+        "brandurl": "http://www.autoevolution.com/suzuki/"
+    },
+    {
+        "brandname*": "TATA MOTORS",
+        "brandurl": "http://www.autoevolution.com/tata-motors/"
+    },
+    {
+        "brandname*": "TESLA MOTORS",
+        "brandurl": "http://www.autoevolution.com/tesla-motors/"
+    },
+    {
+        "brandname*": "TOYOTA",
+        "brandurl": "http://www.autoevolution.com/toyota/"
+    },
+    {
+        "brandname*": "TVR",
+        "brandurl": "http://www.autoevolution.com/tvr/"
+    },
+    {
+        "brandname*": "VAUXHALL",
+        "brandurl": "http://www.autoevolution.com/vauxhall/"
+    },
+    {
+        "brandname*": "VOLKSWAGEN",
+        "brandurl": "http://www.autoevolution.com/volkswagen/"
+    },
+    {
+        "brandname*": "VOLVO",
+        "brandurl": "http://www.autoevolution.com/volvo/"
+    },
+    {
+        "brandname*": "WIESMANN",
+        "brandurl": "http://www.autoevolution.com/wiesmann/"
+    },
+    {
+        "brandname*": "ZENDER",
+        "brandurl": "http://www.autoevolution.com/zender/"
+    }
+]

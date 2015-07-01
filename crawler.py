@@ -1,3 +1,5 @@
+#!/usr/bin/env python
+"""Smart web scraper. Use this to define scraping instructions to automatically populate data models."""
 import os
 import sys
 import simplejson
@@ -152,5 +154,4 @@ if __name__ == "__main__":
         print "crawl result saved to %s.json" % model_name
 
     else:
-
-        print "there was a problem. please fix your argument and try again"
+        print "there was a problem. please fix your arguments and try again"

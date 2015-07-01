@@ -1,8 +1,13 @@
+# reviews:
+#     http://www.amazon.com/Apple-iPhone-16GB-White-Verizon/product-reviews/B004ZLYBQ4/ref=cm_cr_pr_btm_link_2?ie=UTF8&pageNumber=1:
+#         reviewId*: //div[@class="a-section review"]/@id
+#         reviewTitle: //div[@class="a-section review"]/div[2]/a[2]/text()
+#         reviewText: //div[@class="a-section review"]/div[5]/span/text()
+
 cars:
     http://www.autoevolution.com/cars/:
-        //div[@class="brandlist"]/div/a/@href:
-            modelname*: //div[@class="carslist-item"]/h2/a/@title
-            //div[@class="carslist-item"]/h2/a/@href:
-                //div[@class="seriesboxengines"]/ul/li[1]/a/@href:
-                    cylinders: //dt[text()="Cylinders"]/following-sibling::dd[1]/text()
-        brandname: //div[@class="brandlist"]/div/a/h2/text()
+        //div[@class="brandlist"]/div/a/@href
+            modelname: //div[@class="carslist-item"]/h2/a/@title
+        brandname*: //div[@class="brandlist"]/div/a/h2/text()
+
+
