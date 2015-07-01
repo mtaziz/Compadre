@@ -90,22 +90,22 @@ def crawl(d, url=None, base="", desc={}, results=[], options=[]):
             "not a url, must be a field"
             temp_data[k] = curr_page.xpath(v)
 
-        "check if we've reached the end"
-        if not any(isinstance(v, dict) for k,v in d.iteritems()):
-            tk,tv = temp_data.iteritems().next()
+    "check if we've reached the end"
+    if not any(isinstance(v, dict) for k,v in d.iteritems()):
+        tk,tv = temp_data.iteritems().next()
 
-            result_data = []
+        result_data = []
 
-            for index in range(len(tv)):
-                new_desc = {ke:ve[index] for ke,ve in temp_data.iteritems()}
-                new_desc.update(desc)
+        for index in range(len(tv)):
+            new_desc = {ke:ve[index] for ke,ve in temp_data.iteritems()}
+            new_desc.update(desc)
 
-                if "-v" in options:
-                    print "scraped data: %s" % new_desc
+            if "-v" in options:
+                print "scraped data: %s" % new_desc
 
-                result_data.append(new_desc)
+            result_data.append(new_desc)
 
-            return result_data
+        return result_data
 
     return results
 
