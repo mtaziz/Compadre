@@ -15,7 +15,6 @@ from urlparse import urljoin
 def request_safely(url, throttle=0.0, timeout_=5.0, timeout_read=5.0, sleeptime=2.0):
     r = None
     timeout = False
-
     errors = (lambda req: any([len(req.text) < 10,
                             req.status_code in [400, 403, 404, 405, 429, 500],
                             timeout]))
@@ -56,11 +55,11 @@ def sort_od(od):
 def crawl(d, url=None, base="", desc={}, results=[], options=[]):
 
     if url:
-        r = request_safely(url, 200)
+        r = request_safely(url, 100)
         curr_page = html.fromstring(r.text)
 
         if "-v" in options:
-            print "\nscraping: %s" % url
+            print "scraping: %s\n" % url
 
     temp_data = {}
 
