@@ -12,7 +12,7 @@ from collections import defaultdict
 from lxml import html
 from urlparse import urljoin
 
-def request_safely(url, throttle=0.0, timeout_=5.0c, timeout_read=5.0, sleeptime=2.0):
+def request_safely(url, throttle=0.0, timeout_=5.0, timeout_read=5.0, sleeptime=2.0):
     r = None
     timeout = False
 
