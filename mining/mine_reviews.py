@@ -56,13 +56,13 @@ def save_bigrams_data():
     f.close()
 
 """trim results lower than n frequency and sort by pmi"""
-def top_results(min_freq, num_res, allowed_pos=['NN']):
+def top_results(min_freq=5, num_res=10, allowed_pos=['NN']):
     f = open('bigram_scores.json', 'r')
     data = json.loads(f.read())
     data = [d for d in data if d['fr'] >= min_freq]
     data = [d for d in data if d['w1'][1] in allowed_pos and d['w2'][1] in allowed_pos]
     data = sorted(data, key= lambda x:x['pmi'], reverse=True)
     f.close()
-    return data[0:num_res]
+    return data[0:min(num_res, len(data)-1)]
     
 
