@@ -10,7 +10,7 @@ trigram_measures = nltk.collocations.TrigramAssocMeasures()
 
 reviews_texts_words = ""
 
-if os.path.exists("reviews_texts_words.txt"):
+if os.path.exists("reviews_texts_words.pickle"):
     data = open("reviews_texts_words.pickle", "r")
     reviews_texts_words = pickle.loads(data.read())
     data.close()
@@ -18,9 +18,11 @@ else:
     data = open("../crawler/reviews.json", "r")
     json_ = json.loads(data.read())
 
+    reviews_texts = "\n".join([r['reviewText'] for r in json_])
+    reviews_texts = reviews_texts.lower()
+
     print "tokenizing..."
-    reviews_texts = [r['reviewText'] for r in json_]
-    reviews_texts_words = nltk.word_tokenize("\n".join(reviews_texts))
+    reviews_texts_words = nltk.word_tokenize(reviews_texts)
 
     print "tagging pos..."
     """tag POS"""
@@ -40,5 +42,9 @@ print "finding collocations"
 """find bigram collocations"""
 finder = BigramCollocationFinder.from_words(reviews_texts_words)
 finder.apply_freq_filter(5) 
-print finder.nbest(bigram_measures.pmi, 50)
+results = finder.nbest(bigram_measures.pmi, 50)
+print results
+print [ftr for ftr in results if (ftr[0][1] == "NN" and ftr[1][1] == "NN")]
+
+#((u'pixel', 'NN'), (u'density', 'NN')),
 
