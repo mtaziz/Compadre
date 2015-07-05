@@ -12,12 +12,17 @@ from collections import defaultdict
 from lxml import html
 from urlparse import urljoin
 
-def request_safely(url, throttle=0.0, timeout_=5.0, timeout_read=5.0, sleeptime=2.0):
+def request_safely(url, throttle=0.0, timeout_=5.0c, timeout_read=5.0, sleeptime=2.0):
     r = None
     timeout = False
-    errors = (lambda req: any([len(req.text) < 10,
+
+    def errors(req):
+        if req is not None:
+            return any([len(req.text) < 10,
                             req.status_code in [400, 403, 404, 405, 429, 500],
-                            timeout]))
+                            timeout
+                            ])
+        return req is None
 
     try:
         "sleep, the send request"
@@ -27,10 +32,12 @@ def request_safely(url, throttle=0.0, timeout_=5.0, timeout_read=5.0, sleeptime=
         if not errors(r):
             return r
     except requests.exceptions.ConnectTimeout as e:
+        print "timeout occurred, r value is %s" % r
         timeout = True
 
+    print "timeout value is %s" % timeout
     while errors(r):
-        print "request failed: %s. trying again in %ss..." % (r.status_code, sleeptime)
+        print "request failed. trying again in %ss..." % (sleeptime)
         time.sleep(sleeptime)
         sleeptime = min(60, sleeptime*2)
 
