@@ -1,1 +1,4 @@
 .DS_Store
+mining/mine_reviews.pyc
+mining/ga.pyc
+crawler/instructions.yaml

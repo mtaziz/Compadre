@@ -1,5 +1,5 @@
-areviews:
-    http://www.amazon.com/Amazon-Fire-Phone-32GB-Unlocked/product-reviews/B00OC0USA6/ref=cm_cr_pr_btm_link_2?ie=UTF8&showViewpoints=1&sortBy=helpful&reviewerType=all_reviews&filterByStar=all_stars&pageNumber=[1->748]:
+galaxys5:
+    http://www.amazon.com/Samsung-Galaxy-S5-Black-Sprint/product-reviews/B00IZ1WUNG/ref=cm_cr_pr_btm_link_2?ie=UTF8&showViewpoints=1&sortBy=recent&reviewerType=all_reviews&formatType=all_formats&filterByStar=all_stars&pageNumber=[1->271]:
         reviewId*: //div[@class="a-section review"]/@id
         reviewTitle: //div[@class="a-section review"]/div[2]/a[2]/text()
         reviewText: //div[@class="a-section review"]/div[5]/span/text()
