@@ -1,18 +1,18 @@
 import random
 
 "initial pool of organisms for testing"
-initial_pool_ = [(0.05, 0.1, 0.1),
-                (0.04, 0.1, 0.2),
-                (0.05, 0.2, 0.2),
-                (0.048, 0.2, 1.0),
-                (0.049, 1.0, 0.3)]
+initial_pool_ = [(5, 0.1, 0.1),
+                (5, 0.1, 0.2),
+                (5, 0.2, 0.2),
+                (5, 0.2, 1.0),
+                (5, 1.0, 0.3)]
 
 "best constants after ~60 generations for n0*pmi + n1*frequency"
-best_addition = [(0.0183513596938029, 0.3135673133977043, 0.004890210734243838),
-                (0.2528731352604893, 0.9699263089994359, 0.013003233775384704),
-                (0.2788266998623834, 0.9804099106296693, 0.012776263015842337),
-                (0.381348689822024, 1.0953649343654606, 0.012729834994913869),
-                (0.3886202489674002, 1.0344276839102837, 0.012812949829223763)]
+best_addition = [(5, 0.3135673133977043, 0.004890210734243838),
+                (5, 0.9699263089994359, 0.013003233775384704),
+                (5, 0.9804099106296693, 0.012776263015842337),
+                (5, 1.0953649343654606, 0.012729834994913869),
+                (5, 1.0344276839102837, 0.012812949829223763)]
 
 """
 great with agents_of_shield && amazon_fire
@@ -23,7 +23,7 @@ great with agents_of_shield && amazon_fire
 ((0.3886202489674002, 1.0344276839102837, 0.012812949829223763), 2)
 """
 
-def run_ga(generations=10, organisms_per_generation=10, cutoff=5, initial_pool=best_addition, fitness=lambda o:o+1, max_=False):
+def run_ga(generations=10, organisms_per_generation=10, cutoff=5, initial_pool=initial_pool_, fitness=lambda o:o+1, max_=False):
     organisms = initial_pool
     for g in range(generations):
         """sort organisms by fitness and apply cutoff"""
@@ -35,7 +35,7 @@ def run_ga(generations=10, organisms_per_generation=10, cutoff=5, initial_pool=b
         for index in range(organisms_per_generation - len(organisms_)):
             """pick two random organisms and combine their traits randomly"""
             org1 = organisms_[int(random.random() * (len(organisms_) - 1))]
-            new_org = (abs(random.uniform(-1, 1)*0.1+org1[0]), abs(random.uniform(-1, 1)*0.1+org1[1]), abs(random.uniform(-1, 1)+org1[2]))
+            new_org = (abs(random.uniform(-1, 1)+org1[0]), abs(random.uniform(-1, 1)*0.1+org1[1]), abs(random.uniform(-1, 1)+org1[2]))
             organisms_.append(new_org)
 
         organisms = organisms_
