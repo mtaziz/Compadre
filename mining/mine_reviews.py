@@ -56,13 +56,46 @@ def save_bigrams_data():
     f.close()
 
 """trim results lower than n frequency and sort by pmi"""
-def top_results(min_freq=5, num_res=10, allowed_pos=['NN']):
+def top_results(min_freq=1.0, num_res=14, allowed_pos=['NN'], sort_f=lambda x:x['pmi']):
     f = open('bigram_scores.json', 'r')
     data = json.loads(f.read())
-    data = [d for d in data if d['fr'] >= min_freq]
+    min_freq = int(float(min_freq)/100*len(data))
+    data = [d for d in data if int(d['fr']) > min_freq]
     data = [d for d in data if d['w1'][1] in allowed_pos and d['w2'][1] in allowed_pos]
-    data = sorted(data, key= lambda x:x['pmi'], reverse=True)
+    data = sorted(data, key=sort_f, reverse=True)
     f.close()
     return data[0:min(num_res, len(data)-1)]
-    
 
+def pmi_freq_fitness(organism):
+    #print "calculating fitness for: {}".format(organism)
+    """calculate fitness for an organism, an organism is (n0, n1, n2)"""
+    results = ["%s %s" % (r['w1'][0], r['w2'][0]) for r in top_results(min_freq=organism[0], sort_f=lambda x:organism[1]*x['pmi']+organism[2]*x['fr'])]
+
+    best = ['battery life',
+ 'back button',
+ 'sim card',
+ 'screen protector',
+ 'prime membership',
+ 'pixel density',
+ 'image stabilization',
+ 'status bar',
+ 'learning curve',
+ 'gorilla glass',
+ 'voice recognition',
+ 'notification light',
+ 'operating system',
+ 'instant video']
+
+    diff = list(set(best) - set(results))
+    return (len(diff), results)
+
+"""use genetic algorithm to optimize values of min_freq, and constants for pmi and fr"""
+# from ga import run_ga
+# run_ga(initial_pool=[(0.1, 1.0, 1.0), (0.1, 1.0, 2.0)], fitness=pmi_freq_fitness)
+#run_ga(organisms_per_generation=10, cutoff=10, initial_pool=[], fitness=pmi_freq_fitness)
+
+
+
+"""works?
+top_results(min_freq="0.1%", sort_f=lambda x:x['pmi']*x['fr'])
+"""
