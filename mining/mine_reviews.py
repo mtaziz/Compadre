@@ -69,7 +69,7 @@ def top_results(min_freq=1.0, num_res=14, allowed_pos=['NN'], sort_f=lambda x:x[
 def pmi_freq_fitness(organism):
     #print "calculating fitness for: {}".format(organism)
     """calculate fitness for an organism, an organism is (n0, n1, n2)"""
-    results = ["%s %s" % (r['w1'][0], r['w2'][0]) for r in top_results(min_freq=organism[0], sort_f=lambda x:organism[1]*x['pmi']+organism[2]*x['fr'])]
+    results = ["%s %s" % (r['w1'][0], r['w2'][0]) for r in top_results(min_freq=organism[0], sort_f=lambda x:float(organism[1]+x['pmi'])*float(organism[2]+x['fr']))]
 
     best = ['battery life',
  'back button',
