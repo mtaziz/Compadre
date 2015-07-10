@@ -1,6 +1,4 @@
 import networkx
-import nltk
-import json
 
 def rank_by_centrality(tokenized_sentences):
     """Rank list of tokens by their centrality, by applying PageRank onto a 

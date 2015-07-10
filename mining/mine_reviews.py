@@ -58,7 +58,7 @@ def top_results(file_name, min_freq=1.0, num_res=14, allowed_pos=['NN'], sort_f=
     data = [d for d in data if d['w1'][1] in allowed_pos and d['w2'][1] in allowed_pos]
     data = sorted(data, key=sort_f, reverse=True)
     f.close()
-    return data[0:min(num_res, len(data)-1)]
+    return data[0:min(num_res, len(data))]
 
 def pmi_freq_fitness(organism):
     files = ['amazon_fire', 'agents_of_shield', 'galaxys5']
