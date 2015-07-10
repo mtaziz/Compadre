@@ -13,6 +13,7 @@ from lxml import html
 from urlparse import urljoin
 
 def request_safely(url, throttle=0.0, timeout_=5.0, timeout_read=5.0, sleeptime=2.0):
+    url = url.strip()
     r = None
     timeout = False
 
@@ -75,34 +76,71 @@ def crawl(d, url=None, base="", desc={}, results=[], options=[]):
         "if v is a dict, then k is a url"
         if isinstance(v, dict):
 
+            #if url, all fields have been added to temp_data
+            new_desc = {ke:ve[index] for ke,ve in temp_data.iteritems()}
+            new_desc.update(desc)
+
             if any(flag in k for flag in ['www.', 'http://']):
                 "This is a normal url, continue the crawl"
 
                 "check for url number loop instructions"
-                num_loop = re.search(r'\[([0-9\(\)]+)->([0-9\(\)]+)\]', k)
+                #(\[([a-z]+\|)?([0-9\(\)]+)->([0-9\(\)]+)\])
+                num_loop = re.search(
+                    r'(\[([A-Za-z0-9]+\|)?([0-9\(\)]+)->([0-9\(\)]+)\])', k)
                 if num_loop:
-                    for i in range(int(num_loop.group(1)), int(num_loop.group(2))+1):
+                    for i in range(int(num_loop.groups()[2]), 
+                                   int(num_loop.groups()[3])+1):
+                        new_url = ""
+
                         "replace loop with actual number, build new url and crawl"
-                        new_url = re.sub(r'(\[[0-9\(\)]+->[0-9\(\)]+\])', "%s"%i, k)
-                        results.extend(crawl(v, new_url, base=urljoin(base, new_url), desc=desc, options=options))
+                        if num_loop.groups()[1]:
+                            get_var = num_loop.groups()[1].replace("|", "")
+                            new_url = re.sub(
+                                r'(\[([A-Za-z0-9]+\|)?([0-9\(\)]+)->([0-9\(\)]+)\])',
+                                    "", k)
+                            #reset get variable to new value
+                            new_url = re.sub(r'{0}=([A-Za-z0-9 _]+)'.format(
+                                             get_var), "{0}={1}".format(
+                                             get_var, i), new_url)
+                        else:
+                            #just replace bracketed expression with the number
+                            new_url = re.sub(
+                                r'(\[([A-Za-z0-9]+\|)?([0-9\(\)]+)->([0-9\(\)]+)\])',
+                                    "%s"%i, k)
+                        results.extend(crawl(v, new_url, base=urljoin(
+                                       base, new_url),
+                                        desc=new_desc, 
+                                        options=options))
                 else:
-                    results.extend(crawl(v, k, base=urljoin(base, url), desc=desc, options=options))
+                    results.extend(crawl(v, k, base=urljoin(
+                                   base, url), 
+                                    desc=new_desc, 
+                                    options=options))
 
             else:
-                """This is an xpath expression for a url. if the next entry in the instruction set is a url
-                loop through xpath results (or 1 url), and make a new description to pass
-                on to the next crawl() call
+                """This is an xpath expression for a url. if the next entry in 
+                the instruction set is a url loop through xpath results 
+                (or 1 url), and make a new description to pass on to the next 
+                crawl() call
                 """
-                for index, url in enumerate( curr_page.xpath(k) ):
-                    new_desc = {ke:ve[index] for ke,ve in temp_data.iteritems()}
-                    new_desc.update(desc)
+                #check for numloop
+                #if there's a numloop, remove the brackets, extract the url, and for each url,
+                #tack on the [a->b]. In the next pass the numloop will be caught by the above checks.
+                num_loop = re.search(r'(\[[0-9\(\)]+->[0-9\(\)]+\])', k)
+                if num_loop:
+                        k = re.sub(r'(\[[0-9\(\)]+->[0-9\(\)]+\])', "", k)
 
+                for index, url in enumerate( curr_page.xpath(k) ):
                     "if relative url, need to prepend base url"
                     url = urljoin(base, url)
 
+                    if num_loop:
+                        url = "{0}{1}".format(url, num_loop.group(0))
+
                     """carry newly scraped data to the next crawl
                     """
-                    results.extend(crawl(v, url, base=urljoin(base, url), desc=new_desc, options=options))
+                    results.extend(crawl(v, url, base=urljoin(base, url), 
+                                   desc=new_desc, options=options))
 
         else:
             "not a url, must be a field"
@@ -150,7 +188,8 @@ if __name__ == "__main__":
 
         for r in result:
 
-            dupe = [final_result.index(f) for f in final_result if r[unique_field] == f[unique_field]]
+            dupe = [final_result.index(f) for f in final_result 
+                if r[unique_field] == f[unique_field]]
 
             if dupe:
                 dupe = dupe[0]
