@@ -13,6 +13,7 @@ from lxml import html
 from urlparse import urljoin
 
 def request_safely(url, throttle=0.0, timeout_=5.0, timeout_read=5.0, sleeptime=2.0):
+    url = url.strip()
     r = None
     timeout = False
 
