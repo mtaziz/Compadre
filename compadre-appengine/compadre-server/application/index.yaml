@@ -1,19 +1,11 @@
 smartphone:
-    http://www.amazon.com/Best-Sellers-Electronics-Unlocked-Cell-Phones/zgbs/electronics/2407749011/ref=acs_ux_rw_ts_e_2407749011_more?pf_rd_p=2109755402&pf_rd_s=merchandised-search-5&pf_rd_t=101&pf_rd_i=2407749011&pf_rd_m=ATVPDKIKX0DER&pf_rd_r=176ZJ9DYYWYSZ2MW35GQ#1:
-        name*: //div[@class="zg_title"]/a/text()
-        img1: //div[@class="zg_itemImmersion"]//img/@src
-        //div[@class="zg_title"]/a/@href:
-            img2: //img[@id="landingImage"]/@src
-            price: //span[@id="priceblock_ourprice"]/text()
-            features: //div[@id="feature-bullets"]/ul/li/span/text()        
-        //div[@class="zg_reviews"]//a/@href[pageNumber|1->1]:
-            reviewId*: //div[@class="a-section review"]/@id
-            reviewTitle: //div[@class="a-section review"]/div[2]/a[2]/text()
-            reviewText: //div[@class="a-section review"]/div[5]/span/text()
-            reviewStars: //div[@class="a-section review"]/div[2]/a[1]/i/span/text()
-# TODO:
-# for [a->b], let them specify numloop on xpath url; just get url from xpath, tack []
-# onto it and call crawl(), it'll handle it on the next loop.
-# for [a->b], let a or b be integers or xpath expressions for the current page
-# first check if the k has [datasource/something], if it does, then add it to the desc 
-# and set it equal to crawl() with the url, so we get {'amazon_highlights':[...]}
+    urls:
+        - http://www.amazon.com/Best-Sellers-Electronics-Contract-Cell-Phones/zgbs/electronics/2407747011/ref=zg_bs_2407747011_pg_1?_encoding=UTF8&pg=1
+        - http://www.amazon.com/Best-Sellers-Electronics-Contract-Cell-Phones/zgbs/electronics/2407747011/ref=zg_bs_2407747011_pg_2?_encoding=UTF8&pg=2
+        - http://www.amazon.com/Best-Sellers-Electronics-Contract-Cell-Phones/zgbs/electronics/2407747011/ref=zg_bs_2407747011_pg_3?_encoding=UTF8&pg=3
+        - http://www.amazon.com/Best-Sellers-Electronics-Contract-Cell-Phones/zgbs/electronics/2407747011/ref=zg_bs_2407747011_pg_4?_encoding=UTF8&pg=4
+        - http://www.amazon.com/Best-Sellers-Electronics-Contract-Cell-Phones/zgbs/electronics/2407747011/ref=zg_bs_2407747011_pg_5?_encoding=UTF8&pg=5
+    spider: "amazonspider"
+    widgets:
+        - "image_carousel"
+        - "amazon_highlights"

@@ -28,14 +28,13 @@ class DataSource(ndb.Model):
     data_type = ndb.StringProperty(indexed=True)
     content = ndb.JsonProperty(indexed=True)
     crawl_instructions = ndb.JsonProperty(indexed=False)
-    crawl_date = ndb.DateTimeProperty(indexed=False) 
+    crawl_date = ndb.DateTimeProperty(indexed=False)
 
 class Item(ndb.Model):
     """A database model for representing an individual product"""
     name = ndb.StringProperty(indexed=True)
     attributes = ndb.JsonProperty(indexed=False)
-    images = ndb.JsonProperty(indexed=False)
-    data_sources = ndb.JsonProperty(indexed=False) #list of DataSource keys
+    widgets = ndb.JsonProperty(indexed=False) #{"image_carousel":[...]}
     category = ndb.StringProperty(indexed=True)
     date_added = ndb.DateTimeProperty(auto_now_add=True)
 
@@ -76,7 +75,7 @@ class AmazonReviewsDataSource(CrawlableMixin, DataSource):
     summary sentences with sentiment scores.
     """    
     def process_content():
-        crawl_result = self.crawl_( self.crawl_instructions )
+        crawled_reviews = self.
         amazon_reviews = " ".join([r['reviewText'] for r in crawl_result])
         review_sentences = mining.to_sentences(amazon_reviews)
 
