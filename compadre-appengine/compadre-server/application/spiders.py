@@ -4,6 +4,7 @@ import json
 import simplejson
 import pprint
 import yaml
+import copy
 from collections import OrderedDict
 from lxml import html
 from urllib import urlencode, unquote
@@ -13,6 +14,9 @@ from scrapy.spiders import Spider
 from scrapy.selector import Selector
 from scrapy.http import Request
 from scrapy.selector import *
+from scrapy import signals
+from scrapy.signalmanager import SignalManager
+from scrapy.xlib.pydispatch import dispatcher
 
 from selenium import webdriver
 from selenium.webdriver.common.by import By
@@ -49,11 +53,13 @@ class AmazonSpider(Spider):
     name = "amazon"
     allowed_domains = ['amazon.com']
 
-    def __init__(self, start_urls, item_template, *args, **kwargs):
-        super(AmazonSpider, self).__init__(*args, **kwargs)
+    def __init__(self, start_urls, item_template, widgets, class_name, *args, **kwargs):
+        
         self.items = []
         self.start_urls = start_urls
         self.item_template = item_template
+        self.widgets = widgets
+        self.class_name = class_name
         self.xpaths = {
             'blocks':'//div[@class="zg_itemImmersion"]',
             'small_img':'div[@class="zg_itemWrapper"]/div[@class="zg_image"]/div[@class="zg_itemImageImmersion"]/a//img/@src',
@@ -71,12 +77,17 @@ class AmazonSpider(Spider):
             'url_description':'div[@class="zg_itemWrapper"]/div[@class="zg_title"]/a/@href'
         }
 
+        super(AmazonSpider, self).__init__(*args, **kwargs)
+
     def parse(self, response):
         sel = Selector(response)
         blocks = sel.xpath(self.xpaths['blocks'])
 
         for block in blocks:
             item = copy.deepcopy(self.item_template)
+            item['widgets']['image_carousel'] = []
+            item['widgets']['amazon_highlights'] = []
+
             item['widgets']['image_carousel'].extend(block.xpath(
                                                      self.xpaths['small_img']
                                                      ).extract())
@@ -121,7 +132,7 @@ class AmazonSpider(Spider):
         next_url = response.meta['func']
         base_url = response.meta['base']
         next = int(response.meta['next'])
-        max_ = int(sel.xpath(self.xpaths['reviews_max']).extract()[0])
+        max_ = 2#int(sel.xpath(self.xpaths['reviews_max']).extract()[0])
 
         reviews = sel.xpath(self.xpaths['reviews'])
 

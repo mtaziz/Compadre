@@ -25,18 +25,16 @@ class DataSource(ndb.Model):
     """A database model for representing an individual DataSource.
     A single item can have many sources of data.
     """
-    data_type = ndb.StringProperty(indexed=True)
-    content = ndb.JsonProperty(indexed=True)
-    crawl_instructions = ndb.JsonProperty(indexed=False)
-    crawl_date = ndb.DateTimeProperty(indexed=False)
+    content = ndb.JsonProperty()
 
 class Item(ndb.Model):
     """A database model for representing an individual product"""
     name = ndb.StringProperty(indexed=True)
     attributes = ndb.JsonProperty(indexed=False)
-    widgets = ndb.JsonProperty(indexed=False) #{"image_carousel":[...]}
+    widgets = ndb.JsonProperty(indexed=False) #[{"type":image_carousel, "data":[...], "dskey":"1234"}]
     category = ndb.StringProperty(indexed=True)
     date_added = ndb.DateTimeProperty(auto_now_add=True)
+
 
 class CrawlableMixin():
     """A mixing enabling DataSource classes to crawl the web"""
@@ -69,48 +67,6 @@ class CrawlableMixin():
                 final_result.append(r)
 
         return final_result
-
-class AmazonReviewsDataSource(CrawlableMixin, DataSource):
-    """A class for managing a DataSource that processes amazon reviews into 
-    summary sentences with sentiment scores.
-    """    
-    def process_content():
-        crawled_reviews = self.
-        amazon_reviews = " ".join([r['reviewText'] for r in crawl_result])
-        review_sentences = mining.to_sentences(amazon_reviews)
-
-        #pre-process text and find features
-        review_words = mining.to_words(amazon_reviews)
-        review_words = mining.pos_tag(review_words)
-        review_words = [w for w in review_words if w[0] 
-                not in mining.stopwords()]
-        review_bigrams = mining.find_bigram_collocations(review_words)
-        amazon_features = mining.amazon_features_from_collocations(
-                    review_bigrams)
-
-        #find sentences that contain our features, summarize sentence groups
-        #and score features for sentiment
-        feature_sentences = {}
-        feature_sentiments = {f:0 for f in amazon_features}
-
-        for f in amazon_features:
-            sentences = [s for s in review_sentences if f in s]
-            cleaned_sentences = [mining.remove_stopwords(mining.to_words(s) 
-                                                         for s in sentences]
-            #pick most central sentence
-            central = summarize.rank_by_centrality(cleaned_sentences)
-            feature_sentences[f] = sentences[central[0]]
-            feature_sentiments[f] += sum([sentiment.analyze_sentiment(s, 
-                                        amazon_features)[f] for s in sentences])
-
-        #update object in database
-        content = json.dumps({f:(feature_sentences[f], feature_sentiments[f])})
-        self.content = content
-        self.put()
-
-
-
-
 
 
 

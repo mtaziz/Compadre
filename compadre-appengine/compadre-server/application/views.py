@@ -9,14 +9,16 @@ from google.appengine.ext import ndb
 from flask import Flask, request, render_template, flash, url_for, redirect, session, g, jsonify
 from application import app
 
-import models
+import indexer
 
 app = Flask(__name__)
 
 def index():
     return render_template("index.html")
 
-def crawler_worker()
+def crawl_something(something):
+    indexer.index_class(something)
+
 def warmup():
     """App Engine warmup handler
     See http://code.google.com/appengine/docs/python/config/appconfig.html#Warming_Requests

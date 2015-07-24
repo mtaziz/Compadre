@@ -1,0 +1,50 @@
+INFO: Scrapy 1.0.1 started (bot: scrapybot)
+INFO: Optional features available: ssl, http11
+INFO: Overridden settings: {'USER_AGENT': 'Mozilla/4.0 (compatible; MSIE 7.0; Windows NT 5.1)'}
+WARNING: :0: UserWarning: You do not have a working installation of the service_identity module: 'No module named service_identity'.  Please install it from <https://pypi.python.org/pypi/service_identity> and make sure all of its dependencies are satisfied.  Without the service_identity module and a recent enough pyOpenSSL to support it, Twisted can perform only rudimentary TLS client hostname verification.  Many valid certificate/hostname mappings may be rejected.
+
+INFO: Enabled extensions: CloseSpider, TelnetConsole, LogStats, CoreStats, SpiderState
+CRITICAL: Unhandled error in Deferred:
+CRITICAL: Unhandled error in Deferred:
+CRITICAL: 
+CRITICAL: 
+INFO: Scrapy 1.0.1 started (bot: scrapybot)
+INFO: Optional features available: ssl, http11
+INFO: Overridden settings: {'USER_AGENT': 'Mozilla/4.0 (compatible; MSIE 7.0; Windows NT 5.1)'}
+WARNING: :0: UserWarning: You do not have a working installation of the service_identity module: 'No module named service_identity'.  Please install it from <https://pypi.python.org/pypi/service_identity> and make sure all of its dependencies are satisfied.  Without the service_identity module and a recent enough pyOpenSSL to support it, Twisted can perform only rudimentary TLS client hostname verification.  Many valid certificate/hostname mappings may be rejected.
+
+INFO: Enabled extensions: CloseSpider, TelnetConsole, LogStats, CoreStats, SpiderState
+CRITICAL: Unhandled error in Deferred:
+CRITICAL: Unhandled error in Deferred:
+CRITICAL: 
+CRITICAL: 
+INFO: Scrapy 1.0.1 started (bot: scrapybot)
+INFO: Optional features available: ssl, http11
+INFO: Overridden settings: {'USER_AGENT': 'Mozilla/4.0 (compatible; MSIE 7.0; Windows NT 5.1)'}
+WARNING: :0: UserWarning: You do not have a working installation of the service_identity module: 'No module named service_identity'.  Please install it from <https://pypi.python.org/pypi/service_identity> and make sure all of its dependencies are satisfied.  Without the service_identity module and a recent enough pyOpenSSL to support it, Twisted can perform only rudimentary TLS client hostname verification.  Many valid certificate/hostname mappings may be rejected.
+
+INFO: Enabled extensions: CloseSpider, TelnetConsole, LogStats, CoreStats, SpiderState
+CRITICAL: Unhandled error in Deferred:
+CRITICAL: Unhandled error in Deferred:
+CRITICAL: 
+CRITICAL: 
+INFO: Scrapy 1.0.1 started (bot: scrapybot)
+INFO: Optional features available: ssl, http11
+INFO: Overridden settings: {'USER_AGENT': 'Mozilla/4.0 (compatible; MSIE 7.0; Windows NT 5.1)'}
+WARNING: :0: UserWarning: You do not have a working installation of the service_identity module: 'No module named service_identity'.  Please install it from <https://pypi.python.org/pypi/service_identity> and make sure all of its dependencies are satisfied.  Without the service_identity module and a recent enough pyOpenSSL to support it, Twisted can perform only rudimentary TLS client hostname verification.  Many valid certificate/hostname mappings may be rejected.
+
+INFO: Enabled extensions: CloseSpider, TelnetConsole, LogStats, CoreStats, SpiderState
+CRITICAL: Unhandled error in Deferred:
+CRITICAL: Unhandled error in Deferred:
+CRITICAL: 
+CRITICAL: 
+INFO: Scrapy 1.0.1 started (bot: scrapybot)
+INFO: Optional features available: ssl, http11
+INFO: Overridden settings: {'USER_AGENT': 'Mozilla/4.0 (compatible; MSIE 7.0; Windows NT 5.1)'}
+WARNING: :0: UserWarning: You do not have a working installation of the service_identity module: 'No module named service_identity'.  Please install it from <https://pypi.python.org/pypi/service_identity> and make sure all of its dependencies are satisfied.  Without the service_identity module and a recent enough pyOpenSSL to support it, Twisted can perform only rudimentary TLS client hostname verification.  Many valid certificate/hostname mappings may be rejected.
+
+INFO: Enabled extensions: CloseSpider, TelnetConsole, LogStats, CoreStats, SpiderState
+CRITICAL: Unhandled error in Deferred:
+CRITICAL: Unhandled error in Deferred:
+CRITICAL: 
+CRITICAL: 
