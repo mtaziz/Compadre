@@ -66,6 +66,7 @@ WIDGET_FUNCTIONS = {
 #                      category=spider.class_name)
 #         item_.put()
 
+
 def get_index():
     index = yaml.load(open(INDEX,'r').read())
     return index
