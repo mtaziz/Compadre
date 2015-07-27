@@ -11,11 +11,14 @@ from application import views
 
 
 ## URL dispatch rules
+app.add_url_rule('/', 'index', view_func=views.index)
+app.add_url_rule('/crawlsomething/<something>', 'crawl_something', view_func=views.crawl_something)
+
 # App Engine warm up handler
 # See http://code.google.com/appengine/docs/python/config/appconfig.html#Warming_Requests
 app.add_url_rule('/_ah/warmup', 'warmup', view_func=views.warmup)
 
-app.add_url_rule('/', 'index', view_func=views.index)
+
 
 
 ## Error handlers

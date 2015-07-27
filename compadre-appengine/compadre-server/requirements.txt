@@ -11,3 +11,5 @@ networkx==1.9.1
 lxml==3.4.4
 nltk==3.0.3
 simplejson==3.7.3
+Scrapy==1.0.1
+selenium==2.46.0

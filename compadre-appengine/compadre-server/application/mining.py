@@ -1,8 +1,6 @@
 import nltk
 from nltk.collocations import BigramAssocMeasures, BigramCollocationFinder, TrigramAssocMeasures
 from nltk.tag import pos_tag
-from summarize import rank_by_centrality
-from sentiment import feature_scores
 
 def to_words(sentence):
     """Given some text, return a list of words"""
@@ -41,7 +39,7 @@ def find_bigram_collocations(words):
 
     return collocations
 
-def amazon_features_from_collocations(collocations, num_results=10, allowed_pos=['NN']):
+def review_features_from_collocations(collocations, num_results=10, allowed_pos=['NN']):
     """extract features from amazon reviews"""
     min_frequency  = 5.0
     pmi_weight     = 0.3135673133977043
@@ -52,7 +50,7 @@ def amazon_features_from_collocations(collocations, num_results=10, allowed_pos=
                                                 and c['w2'][1] in allowed_pos)]
     collocations = [c for c in collocations if int(c['fr']) > min_frequency]
     collocations = sorted(collocations, key=lambda x: pmi_weight*x['pmi'] + freq_weight*x['fr'], reverse=True)
-    collocations_top = collocations[0:min(num_results, len(collocations)
+    collocations_top = collocations[0:min(num_results, len(collocations))]
 
     return ["{0} {1}".format(coll['w1'], coll['w2']) for coll in collocations_top]
 

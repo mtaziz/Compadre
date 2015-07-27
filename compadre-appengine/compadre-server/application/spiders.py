@@ -4,6 +4,7 @@ import json
 import simplejson
 import pprint
 import yaml
+import copy
 from collections import OrderedDict
 from lxml import html
 from urllib import urlencode, unquote
@@ -13,6 +14,9 @@ from scrapy.spiders import Spider
 from scrapy.selector import Selector
 from scrapy.http import Request
 from scrapy.selector import *
+from scrapy import signals
+from scrapy.signalmanager import SignalManager
+from scrapy.xlib.pydispatch import dispatcher
 
 from selenium import webdriver
 from selenium.webdriver.common.by import By
@@ -49,11 +53,17 @@ class AmazonSpider(Spider):
     name = "amazon"
     allowed_domains = ['amazon.com']
 
-    def __init__(self, start_urls, item_template, *args, **kwargs):
-        super(AmazonSpider, self).__init__(*args, **kwargs)
+    def __init__(self, *args, **kwargs): #start_urls, item_template, widgets, class_name, 
+        
         self.items = []
-        self.start_urls = start_urls
-        self.item_template = item_template
+        self.start_urls = ["http://www.amazon.com/Best-Sellers-Electronics-Unlocked-Cell-Phones/zgbs/electronics/2407749011/ref=zg_bs_nav_e_3_2407747011?pg={num}".format(num=i) for i in range(1,2)]
+        self.item_template = {
+             "name":None,
+             "attributes":None,
+             "widgets":{"image_carousel":[], "review_highlights":[]}
+        }
+        self.widgets = []
+        self.class_name = ""
         self.xpaths = {
             'blocks':'//div[@class="zg_itemImmersion"]',
             'small_img':'div[@class="zg_itemWrapper"]/div[@class="zg_image"]/div[@class="zg_itemImageImmersion"]/a//img/@src',
@@ -71,12 +81,17 @@ class AmazonSpider(Spider):
             'url_description':'div[@class="zg_itemWrapper"]/div[@class="zg_title"]/a/@href'
         }
 
+        super(AmazonSpider, self).__init__(*args, **kwargs)
+
     def parse(self, response):
         sel = Selector(response)
         blocks = sel.xpath(self.xpaths['blocks'])
 
         for block in blocks:
             item = copy.deepcopy(self.item_template)
+            item['widgets']['image_carousel'] = []
+            item['widgets']['review_highlights'] = []
+
             item['widgets']['image_carousel'].extend(block.xpath(
                                                      self.xpaths['small_img']
                                                      ).extract())
@@ -96,8 +111,7 @@ class AmazonSpider(Spider):
         url_reviews = response.meta['url_reviews']
 
         item['name'] = sel.xpath(self.xpaths['name']).extract()
-        item['attributes'] = [''.join(f.xpath(self.xpaths('features_text'
-                      )).extract()) for f in
+        item['attributes'] = [''.join(f.xpath(self.xpaths['features_text']).extract()) for f in
                       sel.xpath(self.xpaths['features'])]
         item['widgets']['image_carousel'].extend(sel.xpath(
                                                  self.xpaths['large_img']
@@ -121,7 +135,7 @@ class AmazonSpider(Spider):
         next_url = response.meta['func']
         base_url = response.meta['base']
         next = int(response.meta['next'])
-        max_ = int(sel.xpath(self.xpaths['reviews_max']).extract()[0])
+        max_ = 2#int(sel.xpath(self.xpaths['reviews_max']).extract()[0])
 
         reviews = sel.xpath(self.xpaths['reviews'])
 
@@ -131,7 +145,7 @@ class AmazonSpider(Spider):
             review['title'] = r.xpath(self.xpaths['review_title']).extract()[0]
             review['text'] = r.xpath(self.xpaths['review_text']).extract()[0]
             review['stars'] = r.xpath(self.xpaths['review_stars']).extract()[0]
-            item['widgets']['amazon_highlights'].append(review)
+            item['widgets']['review_highlights'].append(review)
 
         if next == max_:
             yield self.done(item)

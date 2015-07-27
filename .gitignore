@@ -5,3 +5,4 @@ mining/sentiment.pyc
 crawler/instructions.yaml
 *.pyc
 crawler/scrapy/dirbot
+compadre-appengine/compadre-server/lib/*
