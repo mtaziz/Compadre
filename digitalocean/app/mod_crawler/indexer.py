@@ -88,7 +88,8 @@ def index_class(class_name):
         'ITEM_PIPELINES': {'__main__.ItemPipeline': 1},
     })   
 
-    scrape(process, index, class_name, SPIDERS[spider_name], start_urls, widgets)
+    scrape.apply_async((process, index, class_name, SPIDERS[spider_name], 
+                       start_urls, widgets), queue='scrape_queue')
 
 """
 the methods below are used to process raw data from crawls
