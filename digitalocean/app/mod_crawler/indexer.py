@@ -71,9 +71,9 @@ def index_class(class_name):
     spider_name = class_['spider']
     start_urls = class_['urls']
     widgets = class_['widgets']   
-
+    print "calling scrape with apply_async"
     scrape.apply_async((class_name, SPIDERS[spider_name], 
-                       start_urls, widgets), queue='scrape_queue', countdown=10)
+                       start_urls, widgets), queue='scrape_queue', countdown=3)
 
 """
 the methods below are used to process raw data from crawls
