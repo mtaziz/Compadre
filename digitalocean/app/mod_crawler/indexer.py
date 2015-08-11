@@ -43,7 +43,7 @@ import mining
 import sentiment
 import summarize
 
-INDEX = "index.yaml"
+INDEX = "/Users/yonatanoren/Documents/Projects/Comparisto/digitalocean/app/mod_crawler/index.yaml"
 ITEM_TEMPLATE = {
      "name":None,
      "attributes":None,
@@ -57,17 +57,6 @@ WIDGET_FUNCTIONS = {
     'review_highlights':'review_highlights_'
 }
 
-class ItemPipeline(object):
-
-    def process_item(self, item, spider):
-        """processes the widget data for each item and saves it to the
-        database"""
-        print "saving {}".format(item['name'])
-        # item_ = Item(name=item['name'],
-        #              attributes=item['attributes'],
-        #              widgets=item['widgets'],
-        #              category=spider.class_name)104.236.177.107
-        # item_.put()
 
 def get_index():
     index = yaml.load(open(INDEX,'r').read())
@@ -81,15 +70,10 @@ def index_class(class_name):
     class_ = [c for c in index if c['name'] == class_name][0]
     spider_name = class_['spider']
     start_urls = class_['urls']
-    widgets = class_['widgets']
+    widgets = class_['widgets']   
 
-    process = CrawlerProcess({
-        'USER_AGENT': 'Mozilla/4.0 (compatible; MSIE 7.0; Windows NT 5.1)',
-        'ITEM_PIPELINES': {'__main__.ItemPipeline': 1},
-    })   
-
-    scrape.apply_async((process, index, class_name, SPIDERS[spider_name], 
-                       start_urls, widgets), queue='scrape_queue')
+    scrape.apply_async((class_name, SPIDERS[spider_name], 
+                       start_urls, widgets), queue='scrape_queue', countdown=10)
 
 """
 the methods below are used to process raw data from crawls
