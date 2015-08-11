@@ -37,6 +37,8 @@ from scrapy.signalmanager import SignalManager
 from scrapy.utils.project import get_project_settings
 from spiders import AmazonSpider
 
+from celeryapp.tasks import scrape
+
 import mining
 import sentiment
 import summarize
@@ -64,7 +66,7 @@ class ItemPipeline(object):
         # item_ = Item(name=item['name'],
         #              attributes=item['attributes'],
         #              widgets=item['widgets'],
-        #              category=spider.class_name)
+        #              category=spider.class_name)104.236.177.107
         # item_.put()
 
 def get_index():
@@ -72,7 +74,7 @@ def get_index():
     return index
 
 def index_class(class_name):
-    """starts a spider with a callback to process widget data and 
+    """starts a spider (via celery) with a pipeline to
     save items to the database
     """
     index = get_index()
@@ -86,8 +88,7 @@ def index_class(class_name):
         'ITEM_PIPELINES': {'__main__.ItemPipeline': 1},
     })   
 
-    process.crawl(SPIDERS[spider_name], start_urls=start_urls, item_template=ITEM_TEMPLATE, widgets=widgets, class_name=class_name)
-    process.start()
+    scrape(process, index, class_name, SPIDERS[spider_name], start_urls, widgets)
 
 """
 the methods below are used to process raw data from crawls
