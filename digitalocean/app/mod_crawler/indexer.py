@@ -43,7 +43,7 @@ import mining
 import sentiment
 import summarize
 
-INDEX = "/Users/yonatanoren/Documents/Projects/Comparisto/digitalocean/app/mod_crawler/index.yaml"
+INDEX = "index.yaml"
 ITEM_TEMPLATE = {
      "name":None,
      "attributes":None,
