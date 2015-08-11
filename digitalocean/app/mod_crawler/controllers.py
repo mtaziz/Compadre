@@ -11,4 +11,4 @@ mod_crawler = Blueprint('crawler', __name__, url_prefix='/crawler')
 @mod_crawler.route('/crawl/<classname>/', methods=['GET', 'POST'])
 def crawl(classname):
     indexer.index_class(classname)
-    return "scraping %" %classname
+    return "scraping %s" % classname
