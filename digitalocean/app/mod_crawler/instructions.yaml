@@ -1,0 +1,6 @@
+pebble:
+    http://www.amazon.com/Pebble-Smartwatch-iPhone-Android-Black/product-reviews/B00BKEQBI0/ref=cm_cr_pr_btm_link_2?ie=UTF8&showViewpoints=1&sortBy=recent&reviewerType=all_reviews&formatType=all_formats&filterByStar=all_stars&pageNumber=2[pageNumber|1->5]:
+        reviewId*: //div[@class="a-section review"]/@id
+        reviewTitle: //div[@class="a-section review"]/div[2]/a[2]/text()
+        reviewText: //div[@class="a-section review"]/div[5]/span/text()
+        reviewStars: //div[@class="a-section review"]/div[2]/a[1]/i/span/text()

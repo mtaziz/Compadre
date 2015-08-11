@@ -1,0 +1,11 @@
+-   name: smartphone
+    urls:
+        - http://www.amazon.com/Best-Sellers-Electronics-Contract-Cell-Phones/zgbs/electronics/2407747011/ref=zg_bs_2407747011_pg_1?_encoding=UTF8&pg=1
+        - http://www.amazon.com/Best-Sellers-Electronics-Contract-Cell-Phones/zgbs/electronics/2407747011/ref=zg_bs_2407747011_pg_2?_encoding=UTF8&pg=2
+        - http://www.amazon.com/Best-Sellers-Electronics-Contract-Cell-Phones/zgbs/electronics/2407747011/ref=zg_bs_2407747011_pg_3?_encoding=UTF8&pg=3
+        - http://www.amazon.com/Best-Sellers-Electronics-Contract-Cell-Phones/zgbs/electronics/2407747011/ref=zg_bs_2407747011_pg_4?_encoding=UTF8&pg=4
+        - http://www.amazon.com/Best-Sellers-Electronics-Contract-Cell-Phones/zgbs/electronics/2407747011/ref=zg_bs_2407747011_pg_5?_encoding=UTF8&pg=5
+    spider: "amazonspider"
+    widgets:
+        - "image_carousel"
+        - "amazon_highlights"
