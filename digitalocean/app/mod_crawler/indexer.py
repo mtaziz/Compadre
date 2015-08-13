@@ -45,7 +45,7 @@ import summarize
 
 import socket
 
-prod = (socket.gethostname() is "compadre")
+prod = (socket.gethostname() == "compadre")
 INDEX = ("/Users/yonatanoren/Documents/Projects/Comparisto/digitalocean/app/mo"
          "d_crawler/index.yaml") if not prod else ("/home/yonatan/Compadre/digital"
          "ocean/app/mod_crawler/index.yaml")
