@@ -76,9 +76,15 @@ def index_class(class_name):
     spider_name = class_['spider']
     start_urls = class_['urls']
     widgets = class_['widgets']   
+
+    print "scrape executing with:{0}\n{1}\n{2}\n{3}".format(class_name, 
+                                                            spider_name, 
+                                                            start_urls, widgets)
+
     print "calling scrape with apply_async"
     scrape_task = scrape.apply_async((class_name, SPIDERS[spider_name], 
                        start_urls, widgets), queue='scrape_queue', countdown=3)
+
     return scrape_task
 
 """
