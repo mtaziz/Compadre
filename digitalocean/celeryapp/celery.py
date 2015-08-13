@@ -8,9 +8,7 @@ app = Celery('celeryapp',
              include=['celeryapp.tasks'])
 
 # Optional configuration, see the application user guide.
-app.conf.update(
-    CELERY_TASK_RESULT_EXPIRES=3600,
-)
+app.config_from_object('celeryconfig')
 
 if __name__ == '__main__':
     app.start()
