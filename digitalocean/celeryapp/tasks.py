@@ -33,3 +33,7 @@ def scrape(class_name, spider_name, start_urls, widgets):
                   item_template=ITEM_TEMPLATE, widgets=widgets, 
                   class_name=class_name)
     process.start()
+
+@app.task
+def hello():
+    print "hello"

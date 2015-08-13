@@ -37,7 +37,7 @@ from scrapy.signalmanager import SignalManager
 from scrapy.utils.project import get_project_settings
 from spiders import AmazonSpider
 
-from celeryapp.tasks import scrape
+from celeryapp.tasks import scrape, hello
 
 import mining
 import sentiment
@@ -82,8 +82,11 @@ def index_class(class_name):
                                                             start_urls, widgets)
 
     print "calling scrape with apply_async"
-    scrape_task = scrape.apply_async((class_name, SPIDERS[spider_name], 
-                       start_urls, widgets), queue='scrape_queue', countdown=3)
+    # scrape_task = scrape.apply_async((class_name, SPIDERS[spider_name], 
+    #                    start_urls, widgets), queue='scrape_queue', countdown=3)
+    scrape_task = hello.apply_async(queue='hello_queue')
+    while scrape_task.status is not 'SUCCESS':
+        print scrape_task.status
 
     return scrape_task
 
