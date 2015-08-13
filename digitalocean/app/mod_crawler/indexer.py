@@ -88,7 +88,7 @@ def index_class(class_name):
     scrape_task = hello.apply_async(queue='hello_queue')
     while scrape_task.status is not 'SUCCESS':
         time.sleep(3.0)
-        print "name:{3} status:{0} backend:{1} result:{2}".format(scrape_task.status, scrape_task.backend, scrape_task.result, scrape_task.name)
+        print "status:{0} backend:{1} result:{2}".format(scrape_task.status, scrape_task.backend, scrape_task.result)
 
     return scrape_task
 
