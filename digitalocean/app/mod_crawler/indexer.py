@@ -79,9 +79,7 @@ def index_class(class_name):
     print "calling scrape with apply_async"
     scrape_task = scrape.apply_async((class_name, SPIDERS[spider_name], 
                        start_urls, widgets), queue='scrape_queue', countdown=3)
-
-    while scrape_task.state is not 'SUCCESS':
-        print scrape_task.state
+    return scrape_task
 
 """
 the methods below are used to process raw data from crawls
