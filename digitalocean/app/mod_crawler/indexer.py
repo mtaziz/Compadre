@@ -39,6 +39,7 @@ from spiders import AmazonSpider
 
 from celeryapp.tasks import scrape, hello
 
+import time
 import mining
 import sentiment
 import summarize
@@ -86,6 +87,7 @@ def index_class(class_name):
     #                    start_urls, widgets), queue='scrape_queue', countdown=3)
     scrape_task = hello.apply_async(queue='hello_queue')
     while scrape_task.status is not 'SUCCESS':
+        time.sleep(3.0)
         print "status:{0} backend:{1} result:{2}".format(scrape_task.status, scrape_task.backend, scrape_task.result)
 
     return scrape_task
