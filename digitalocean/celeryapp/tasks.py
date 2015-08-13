@@ -19,7 +19,7 @@ def scrape(class_name, spider_name, start_urls, widgets):
     print "scrape executing with:{0}\n{1}\n{2}\n{3}".format(class_name, 
                                                             spider_name, 
                                                             start_urls, widgets)
-    file_ = open('log.txt', 'a')
+    file_ = open('/home/yonatan/Compadre/digitalocean/celeryapp/log.txt', 'a')
     file_.write("saving:{}".format(item['name']))
     file_.close()
 
