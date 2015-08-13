@@ -81,7 +81,7 @@ def index_class(class_name):
                        start_urls, widgets), queue='scrape_queue', countdown=3)
 
     while scrape_task.state is not 'SUCCESS':
-        print scape_task.state
+        print scrape_task.state
 
 """
 the methods below are used to process raw data from crawls
