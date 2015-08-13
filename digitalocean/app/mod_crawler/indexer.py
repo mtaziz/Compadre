@@ -86,7 +86,7 @@ def index_class(class_name):
     #                    start_urls, widgets), queue='scrape_queue', countdown=3)
     scrape_task = hello.apply_async(queue='hello_queue')
     while scrape_task.status is not 'SUCCESS':
-        print scrape_task.status
+        print "status:{0} backend:{1}"scrape_task.status
 
     return scrape_task
 
