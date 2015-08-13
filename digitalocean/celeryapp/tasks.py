@@ -1,6 +1,9 @@
 from __future__ import absolute_import
 import logging
 from celeryapp.celery import app
+from celery.utils.log import get_task_logger
+
+logger = get_task_logger(__name__)
 
 class ItemPipeline(object):
 
@@ -16,9 +19,9 @@ class ItemPipeline(object):
 
 @app.task
 def scrape(class_name, spider_name, start_urls, widgets):
-    print "scrape executing with:{0}\n{1}\n{2}\n{3}".format(class_name, 
+    logger.info("scrape executing with:{0}\n{1}\n{2}\n{3}".format(class_name, 
                                                             spider_name, 
-                                                            start_urls, widgets)
+                                                            start_urls, widgets))
     file_ = open('/home/yonatan/Compadre/digitalocean/celeryapp/log.txt', 'a')
     file_.write("saving:{}".format(item['name']))
     file_.close()
