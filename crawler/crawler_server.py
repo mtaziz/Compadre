@@ -14,7 +14,7 @@ from lxml import html
 from urllib import urlencode, unquote
 from urlparse import urljoin, urlparse, parse_qsl, ParseResult
 
-def request_safely(url, throttle=0.0, timeout_=5.0, timeout_read=5.0, 
+def request_safely(url, throttle=0.0, timeout_=5.0, timeout_read=5.0,
                    sleeptime=2.0):
     url = url.strip()
     r = None
@@ -50,13 +50,13 @@ def request_safely(url, throttle=0.0, timeout_=5.0, timeout_read=5.0,
     return r
 
 def sort_od(od):
-    """sort the resulting dictionary so that we evaluate the urls last. 
+    """sort the resulting dictionary so that we evaluate the urls last.
     New urls have nested attributes that are dependent on new pages, so we need
-    to finish gathering all of the data associated with a current page before 
+    to finish gathering all of the data associated with a current page before
     moving onto a new one.
     """
     res = OrderedDict()
-    for k, v in sorted(od.items(), key=lambda x: (1 if isinstance(x[1], 
+    for k, v in sorted(od.items(), key=lambda x: (1 if isinstance(x[1],
                        dict) else 0)):
         if isinstance(v, dict):
             res[k] = sort_od(v)
@@ -91,7 +91,7 @@ def crawl(d, url=None, base="", desc={}, results=[], options=[]):
                 num_loop = re.search(
                     r'(\[([A-Za-z0-9]+\|)?([0-9\(\)]+)->([0-9\(\)]+)\])', k)
                 if num_loop:
-                    for i in range(int(num_loop.groups()[2]), 
+                    for i in range(int(num_loop.groups()[2]),
                                    int(num_loop.groups()[3])+1):
 
                         if num_loop.groups()[1]:
@@ -105,17 +105,22 @@ def crawl(d, url=None, base="", desc={}, results=[], options=[]):
                             #just replace bracketed expression with the number
                             k = re.sub(
                                 r'(\[([A-Za-z0-9]+\|)?([0-9\(\)]+)->([0-9\(\)]+)\])',
-                                    "%s"%i, k)
-    
+                                    str(i), k)
+
+                        results.extend(crawl(v, k, base=urljoin(
+                                       base, url),
+                                        desc=desc,
+                                        options=options))
+
                 results.extend(crawl(v, k, base=urljoin(
-                               base, url), 
-                                desc=desc, 
+                               base, url),
+                                desc=desc,
                                 options=options))
 
             else:
-                """This is an xpath expression for a url. if the next entry in 
-                the instruction set is a url loop through xpath results 
-                (or 1 url), and make a new description to pass on to the next 
+                """This is an xpath expression for a url. if the next entry in
+                the instruction set is a url loop through xpath results
+                (or 1 url), and make a new description to pass on to the next
                 crawl() call
                 """
                 #check for numloop
@@ -138,11 +143,11 @@ def crawl(d, url=None, base="", desc={}, results=[], options=[]):
 
                     if num_loop:
                         url = "{0}{1}".format(url, num_loop.group(0))
-
+		    print "in num-loop, going to crawl %s" % url
                     """carry newly scraped data to the next crawl
                     """
                     print "calling crawl() on %s" % url
-                    results.extend(crawl(v, url, base=urljoin(base, url), 
+                    results.extend(crawl(v, url, base=urljoin(base, url),
                                    desc=new_desc, options=options))
 
         else:
@@ -154,7 +159,6 @@ def crawl(d, url=None, base="", desc={}, results=[], options=[]):
     if not any(isinstance(v, dict) for k,v in d.iteritems()):
         print "completely done with:%s\n------" % url
         tk,tv = temp_data.iteritems().next()
-
         result_data = []
 
         for index in range(len(tv)):
@@ -199,7 +203,7 @@ if __name__ == "__main__":
 
     if len(sys.argv) < 2:
         print "specify a yaml file to read crawl instructions from"
-    
+
     elif os.path.exists(sys.argv[1]):
 
         file_ = open(sys.argv[1], 'r')
@@ -218,7 +222,7 @@ if __name__ == "__main__":
 
         for r in result:
 
-            dupe = [final_result.index(f) for f in final_result 
+            dupe = [final_result.index(f) for f in final_result
                 if r[unique_field] == f[unique_field]]
 
             if dupe:
@@ -231,7 +235,7 @@ if __name__ == "__main__":
                             final_result[dupe][k] = [final_result[dupe][k], v]
             else:
                 final_result.append(r)
-            
+
 
         json_ = open("%s.json"%model_name, 'w')
         json_.write(simplejson.dumps(final_result, indent=4, sort_keys=True))
