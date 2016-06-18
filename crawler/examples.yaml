@@ -1,5 +1,5 @@
 reviews:
-    http://www.amazon.com/Apple-iPhone-16GB-White-Verizon/product-reviews/B004ZLYBQ4/ref=cm_cr_pr_btm_link_2?ie=UTF8&pageNumber=1[pageNumber|1->5]:
+    http://www.amazon.com/Apple-iPhone-16GB-White-Verizon/product-reviews/B004ZLYBQ4/ref=cm_cr_pr_btm_link_2?ie=UTF8&pageNumber=1[pageNumber|1->50]:
         reviewId*: //div[@class="a-section review"]/@id
         reviewTitle: //div[@class="a-section review"]/div[1]/a[2]/text()
         reviewText: //div[@class="a-section review"]/div[4]/span/text()
