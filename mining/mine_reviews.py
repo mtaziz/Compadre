@@ -3,7 +3,7 @@ import json
 import simplejson
 import pickle
 import nltk
-from nltk.collocations import BigramAssocMeasures, BigramCollocationFinder, TrigramAssocMeasures
+from nltk.collocations import BigramAssocMeasures, BigramCollocationFinder, TrigramCollocationFinder, TrigramAssocMeasures
 from nltk.tag import pos_tag
 
 bigram_measures = nltk.collocations.BigramAssocMeasures()
@@ -39,14 +39,14 @@ def save_bigrams_data(file_name):
     raw_data = load_review_texts(file_name)
     raw_data = [(r[0].lower(), r[1]) for r in raw_data]
 
-    finder = BigramCollocationFinder.from_words(raw_data)
+    bifinder = BigramCollocationFinder.from_words(raw_data)
 
-    pmi_scores = finder.score_ngrams(bigram_measures.pmi)
-    frequencies = dict(finder.ngram_fd.items())
+    bi_pmi_scores = bifinder.score_ngrams(bigram_measures.pmi)
+    bi_frequencies = dict(bifinder.ngram_fd.items())
 
-    f = open("{}.json".format(file_name), 'w')
-    data = [{'w1':t[0][0], 'w2':t[0][1], 'pmi':t[1], 'fr':frequencies[(t[0][0], t[0][1])]} for t in pmi_scores]
-    f.write(simplejson.dumps(sorted(data, key=lambda x:x['fr']), indent=4))
+    f = open("products/{}.json".format(file_name), 'w')
+    bi_data = [{'w1':t[0][0], 'w2':t[0][1], 'pmi':t[1], 'fr':bi_frequencies[(t[0][0], t[0][1])]} for t in bi_pmi_scores]
+    f.write(simplejson.dumps(sorted(bi_data, key=lambda x:x['fr']), indent=4))
     f.close()
 
 """trim results lower than n frequency and sort by pmi"""
@@ -95,9 +95,21 @@ def pmi_freq_fitness(organism):
         }
 
     """calculate fitness for an organism, an organism is (n0, n1, n2)"""
-    results = {f:["%s %s" % (r['w1'][0], r['w2'][0]) for r in top_results(file_name=f, min_freq=organism[0], num_res=len(best[f]), 
+    results = {f:["%s %s" % (r['w1'][0], r['w2'][0]) for r in top_results(file_name=f, min_freq=organism[0], num_res=len(best[f]),
                                                                        sort_f=lambda x:float(organism[1])*x['pmi']+float(organism[2])*x['fr'])] for f in files}
 
     diffs = [list(set(best[f]) - set(results[f])) for f in files]
-    
+
     return sum([len(d) for d in diffs])
+
+if __name__ == '__main__':
+    def get_terms(file_):
+    	save_bigrams_data(file_)
+    	res = top_results(file_)
+	print "%s:" % file_
+    	for w in res:
+        	print "{0} {1} {2}".format(w['w1'][0], w['w2'][0], w['pmi'])
+
+    get_terms('phones')
+    get_terms('movies')
+    get_terms('clothes')

@@ -1,8 +1,16 @@
-reviews:
+phones:
     http://www.amazon.com/Apple-iPhone-16GB-White-Verizon/product-reviews/B004ZLYBQ4/ref=cm_cr_pr_btm_link_2?ie=UTF8&pageNumber=1[pageNumber|1->50]:
         reviewId*: //div[@class="a-section review"]/@id
         reviewTitle: //div[@class="a-section review"]/div[1]/a[2]/text()
         reviewText: //div[@class="a-section review"]/div[4]/span/text()
-
-
+movies:
+    https://www.amazon.com/product-reviews/B00TU9UFTS/ref=acr_dpinstantvideo_text?ie=UTF8&&pageNumber=1[pageNumber|1->50]:
+        reviewId*: //div[@class="a-section review"]/@id
+        reviewTitle: //div[@class="a-section review"]/div[1]/a[2]/text()
+        reviewText: //div[@class="a-section review"]/div[4]/span/text()
+clothes:
+    https://www.amazon.com/Columbia-Watertight-Front-Zip-Hooded-Jacket/product-reviews/B00HN53994/ref=cm_cr_dp_qt_see_all_top?ie=UTF8&pageNumber=1[pageNumber|1->50]:
+        reviewId*: //div[@class="a-section review"]/@id
+        reviewTitle: //div[@class="a-section review"]/div[1]/a[2]/text()
+        reviewText: //div[@class="a-section review"]/div[4]/span/text()
 

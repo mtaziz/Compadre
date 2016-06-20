@@ -130,8 +130,8 @@ def crawl(d, url=None, base="", desc={}, results=[], options=[]):
                 if num_loop:
                         k = re.sub(r'(\[[0-9\(\)]+->[0-9\(\)]+\])', "", k)
 
-                pprint.pprint(temp_data)
-                pprint.pprint(curr_page.xpath(k))
+                # pprint.pprint(temp_data)
+                # pprint.pprint(curr_page.xpath(k))
                 for index, url in enumerate( curr_page.xpath(k) ):
                     url = url.strip()
                     #if url, all fields have been added to temp_data]
@@ -155,7 +155,7 @@ def crawl(d, url=None, base="", desc={}, results=[], options=[]):
             temp_data[k] = curr_page.xpath(v)
 
     "check if we've reached the end of the tree"
-    pprint.pprint([(k,v) for k,v in d.iteritems()])
+    # pprint.pprint([(k,v) for k,v in d.iteritems()])
     if not any(isinstance(v, dict) for k,v in d.iteritems()):
         print "completely done with:%s\n------" % url
         tk,tv = temp_data.iteritems().next()
@@ -212,35 +212,38 @@ if __name__ == "__main__":
 
         print "crawl started...\nrun with -v for verbose crawling"
 
-        model_name, crawl_data = yaml_.iteritems().next()
-        result = crawl(sort_od(crawl_data), options=sys.argv[2:])
+        for model_name, crawl_data in yaml_.iteritems():
 
-        final_result = []
+            print "%s:\n%s" % (model_name, crawl_data)
 
-        "combine duplicates"
-        unique_field = [k for k in result[0].keys() if "*" in k][0]
+            result = crawl(sort_od(crawl_data), url=None, base="", results=[], desc={}, options=sys.argv[2:])
 
-        for r in result:
+            final_result = []
 
-            dupe = [final_result.index(f) for f in final_result
-                if r[unique_field] == f[unique_field]]
+            "combine duplicates"
+            unique_field = [k for k in result[0].keys() if "*" in k][0]
 
-            if dupe:
-                dupe = dupe[0]
-                for k,v in r.iteritems():
-                    if not v == final_result[dupe][k]:
-                        if isinstance(final_result[dupe][k], list):
-                            final_result[dupe][k].append(v)
-                        else:
-                            final_result[dupe][k] = [final_result[dupe][k], v]
-            else:
-                final_result.append(r)
+            for r in result:
+
+                dupe = [final_result.index(f) for f in final_result
+                    if r[unique_field] == f[unique_field]]
+
+                if dupe:
+                    dupe = dupe[0]
+                    for k,v in r.iteritems():
+                        if not v == final_result[dupe][k]:
+                            if isinstance(final_result[dupe][k], list):
+                                final_result[dupe][k].append(v)
+                            else:
+                                final_result[dupe][k] = [final_result[dupe][k], v]
+                else:
+                    final_result.append(r)
 
 
-        json_ = open("%s.json"%model_name, 'w')
-        json_.write(simplejson.dumps(final_result, indent=4, sort_keys=True))
-        json_.close()
-        print "crawl result saved to %s.json" % model_name
+            json_ = open("%s.json"%model_name, 'w')
+            json_.write(simplejson.dumps(final_result, indent=4, sort_keys=True))
+            json_.close()
+            print "crawl result saved to %s.json" % model_name
 
     else:
         print "crawl instruction set not found. please fix your arguments and try again"
